@@ -1,0 +1,18 @@
+CREATE DATABASE IF NOT EXISTS retro_forum CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE retro_forum;
+
+CREATE TABLE threads (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE posts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    thread_id INT NOT NULL,
+    author VARCHAR(100) NOT NULL,
+    body TEXT NOT NULL,
+    created_at DATETIME NOT NULL,
+    FOREIGN KEY (thread_id) REFERENCES threads(id) ON DELETE CASCADE
+) ENGINE=InnoDB;
