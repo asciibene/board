@@ -1,7 +1,7 @@
 <?php
-$host = '127.0.0.1';
-$db   = 'retro_forum';
-$user = 'root';
+$host = 'sql208.byethost13.com';
+$db   = 'b13_43169731_bbs';
+$user = 'b13_43169731';
 $pass = ''; // Set your database password here
 $charset = 'utf8mb4';
 
