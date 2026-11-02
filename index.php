@@ -1,5 +1,5 @@
 <?php
-require_once 'db.php';
+require_once './includes/db.php';
 
 $error = '';
 
@@ -63,6 +63,8 @@ $threads = $stmt->fetchAll();
         button:hover { background: #ccc; }
         .error { color: #c00; font-weight: bold; margin-bottom: 10px; }
     </style>
+    <script src="node_modules/eruda/eruda.js"></script>
+<script>eruda.init();</script>
 </head>
 <body>
 
