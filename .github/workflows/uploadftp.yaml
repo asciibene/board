@@ -7,7 +7,7 @@ jobs:
     steps:
     - uses: actions/checkout@v6
     - name: Upload ftp
-      uses: genietim/ftp-action@v6
+      uses: genietim/ftp-action
       with:
         host: ${{ secrets.FTP_SERVER }}
         user: ${{ secrets.FTP_USERNAME }}
