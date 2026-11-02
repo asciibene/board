@@ -111,6 +111,7 @@ $threads = $stmt->fetchAll();
         
         <button type="submit">Post Thread</button>
     </form>
+    <footer>test ok</footer>
 
 </body>
 </html>
