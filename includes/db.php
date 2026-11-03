@@ -2,7 +2,7 @@
 $host = 'sql208.byethost13.com';
 $db   = 'b13_43169731_bbs';
 $user = 'b13_43169731';
-$pass = 'Leroux666'; // Set your database password here
+$pass = 'Leroux666';
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
