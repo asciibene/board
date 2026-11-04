@@ -1,9 +1,15 @@
 <?php
-$host = 'sql208.byethost13.com';
-$db   = 'b13_43169731_bbs';
-$user = 'b13_43169731';
-$pass = 'Leroux666';
+$host = getenv('DB_HOST');
+$db = getenv('DB_NAME');
+$user = getenv('DB_USER');
+$pass = getenv('DB_PASS');
 $charset = 'utf8mb4';
+
+if ($host === false || $db === false || $user === false || $pass === false) {
+    error_log('Database configuration is incomplete. Set DB_HOST, DB_NAME, DB_USER, and DB_PASS.');
+    http_response_code(500);
+    exit('Database configuration is incomplete.');
+}
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 $options = [
@@ -14,7 +20,8 @@ $options = [
 
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    // In production, log this error instead of echoing it directly
-    exit("Database connection failed.");
+} catch (PDOException $e) {
+    error_log('Database connection failed: ' . $e->getMessage());
+    http_response_code(500);
+    exit('Database connection failed.');
 }
