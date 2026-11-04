@@ -7,7 +7,7 @@ $error = '';
 // Posting requires an authenticated account.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_SESSION['user_id'])) {
-        header('Location: auth.php');
+        header('Location: login.php');
         exit;
     }
 
@@ -23,15 +23,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             try {
                 $pdo->beginTransaction();
-
                 $stmt = $pdo->prepare('INSERT INTO threads (title, author, created_at) VALUES (?, ?, NOW())');
                 $stmt->execute([$title, $author]);
                 $threadId = $pdo->lastInsertId();
 
                 $stmt = $pdo->prepare('INSERT INTO posts (thread_id, author, body, created_at) VALUES (?, ?, ?, NOW())');
                 $stmt->execute([$threadId, $author, $body]);
-
                 $pdo->commit();
+
                 header('Location: index.php');
                 exit;
             } catch (Exception $e) {
@@ -45,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch all threads with reply counts.
 $stmt = $pdo->query('
     SELECT t.*, COUNT(p.id) AS total_posts
     FROM threads t
@@ -79,15 +77,14 @@ $threads = $stmt->fetchAll();
     <h1>Bulletin Board</h1>
 
     <?php if (isset($_SESSION['user_id'])): ?>
-        <p>Signed in as <?= h($_SESSION['username']) ?>.
-            <form action="auth.php" method="POST" style="display:inline;">
-                <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
-                <input type="hidden" name="action" value="logout">
-                <button type="submit">Log Out</button>
-            </form>
-        </p>
+        <p>Signed in as <?= h($_SESSION['username']) ?>.</p>
+        <form action="login.php" method="POST" style="display:inline;">
+            <input type="hidden" name="csrf_token" value="<?= h(csrf_token()) ?>">
+            <input type="hidden" name="action" value="logout">
+            <button type="submit">Log Out</button>
+        </form>
     <?php else: ?>
-        <p><a href="auth.php">Log in or create an account</a> to start a thread.</p>
+        <p><a href="login.php">Log in or create an account</a> to start a thread.</p>
     <?php endif; ?>
 
     <?php if ($error !== ''): ?>
@@ -95,9 +92,7 @@ $threads = $stmt->fetchAll();
     <?php endif; ?>
 
     <table>
-        <thead>
-            <tr><th>Topic</th><th>Author</th><th>Replies</th><th>Created</th></tr>
-        </thead>
+        <thead><tr><th>Topic</th><th>Author</th><th>Replies</th><th>Created</th></tr></thead>
         <tbody>
             <?php if (empty($threads)): ?>
                 <tr><td colspan="4">No threads found. Start the first conversation below!</td></tr>

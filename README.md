@@ -10,7 +10,7 @@ A small PHP and MySQL bulletin board. Visitors can browse threads; registered us
    - `DB_USER` — database username
    - `DB_PASS` — database password (an empty value is allowed if your local database is configured that way)
 2. Import `schema.sql` into the database. For example: `mysql -u YOUR_DB_USER -p < schema.sql` (the script creates and selects the `retro_forum` database).
-3. Serve the repository with PHP and open `index.php`.
+3. Serve the repository with PHP and open `index.php`. The account page is `login.php`.
 
 For an existing installation, run the `CREATE TABLE users` statement from `schema.sql` against the application's database before deploying this version; `CREATE TABLE IF NOT EXISTS` will not add the table to an already-created database automatically.
 
